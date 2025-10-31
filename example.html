@@ -1,0 +1,125 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SIP Calculator Demo</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 600px;
+            margin: 50px auto;
+            padding: 20px;
+            background: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        h1 { color: #2c3e50; }
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+        input {
+            width: 100%;
+            padding: 10px;
+            margin-top: 5px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            margin-top: 20px;
+            background: #3498db;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+        }
+        button:hover {
+            background: #2980b9;
+        }
+        .result {
+            margin-top: 20px;
+            padding: 20px;
+            background: #ecf0f1;
+            border-radius: 5px;
+            display: none;
+        }
+        .result h3 {
+            margin-top: 0;
+            color: #27ae60;
+        }
+        .result-item {
+            margin: 10px 0;
+            font-size: 16px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>💰 SIP Calculator</h1>
+        <p>Calculate your Systematic Investment Plan returns</p>
+        
+        <label for="investment">Monthly Investment (₹)</label>
+        <input type="number" id="investment" value="5000" min="100">
+        
+        <label for="rate">Expected Annual Return (%)</label>
+        <input type="number" id="rate" value="12" min="1" max="30" step="0.1">
+        
+        <label for="years">Time Period (Years)</label>
+        <input type="number" id="years" value="10" min="1" max="50">
+        
+    <label for="inflation">Expected Annual Inflation (%)</label>
+    <input type="number" id="inflation" value="4" min="0" max="100" step="0.1">
+        
+        <button onclick="calculateSIP()">Calculate Returns</button>
+        
+        <div class="result" id="result">
+            <h3>📊 Your Investment Results</h3>
+            <div class="result-item"><strong>Total Invested:</strong> ₹<span id="invested"></span></div>
+            <div class="result-item"><strong>Estimated Returns (Nominal):</strong> ₹<span id="returns"></span></div>
+            <div class="result-item"><strong>Future Value (Nominal):</strong> ₹<span id="value"></span></div>
+            <hr />
+            <div class="result-item"><strong>Inflation Rate:</strong> <span id="inflationOut"></span>%</div>
+            <div class="result-item"><strong>Real Annual Return (approx):</strong> <span id="realReturnOut"></span>%</div>
+            <div class="result-item"><strong>Future Value (Inflation-adjusted / Present Value):</strong> ₹<span id="valueInflation"></span></div>
+            <div class="result-item"><strong>Estimated Returns (Inflation-adjusted):</strong> ₹<span id="returnsInflation"></span></div>
+        </div>
+    </div>
+
+    <script src="sip-calculator.js"></script>
+    <script>
+        function calculateSIP() {
+            const investment = parseFloat(document.getElementById('investment').value);
+            const rate = parseFloat(document.getElementById('rate').value);
+            const years = parseFloat(document.getElementById('years').value);
+            const inflation = parseFloat(document.getElementById('inflation').value) || 0;
+            
+            try {
+                const result = SIPCalculator.calculate(investment, rate, years, inflation);
+
+                document.getElementById('invested').textContent = result.totalInvested.toLocaleString('en-IN');
+                document.getElementById('returns').textContent = result.estimatedReturns.toLocaleString('en-IN');
+                document.getElementById('value').textContent = result.futureValue.toLocaleString('en-IN');
+
+                document.getElementById('inflationOut').textContent = (result.inflationRate || 0).toFixed(2);
+                document.getElementById('realReturnOut').textContent = (result.realAnnualReturnRate || 0).toFixed(2);
+                document.getElementById('valueInflation').textContent = (result.inflationAdjustedFutureValue || 0).toLocaleString('en-IN');
+                document.getElementById('returnsInflation').textContent = (result.inflationAdjustedEstimatedReturns || 0).toLocaleString('en-IN');
+                
+                document.getElementById('result').style.display = 'block';
+            } catch (error) {
+                alert('Error: ' + error.message);
+            }
+        }
+    </script>
+</body>
+</html>

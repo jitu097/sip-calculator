@@ -1,0 +1,30 @@
+{
+  "name": "sip-calculator",
+  "version": "1.0.0",
+  "description": "A simple JavaScript library for Systematic Investment Plan (SIP) calculations with compound interest, returns estimation, and investment planning",
+  "main": "sip-calculator.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/jitu097/sip-calculator.git"
+  },
+  "keywords": [
+    "sip",
+    "calculator",
+    "investment",
+    "finance",
+    "mutual-funds",
+    "compound-interest",
+    "fintech",
+    "financial-planning",
+    "systematic-investment-plan"
+  ],
+  "author": "jitu097",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/jitu097/sip-calculator/issues"
+  },
+  "homepage": "https://github.com/jitu097/sip-calculator#readme"
+}
